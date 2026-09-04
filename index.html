@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Forty years of an offshore wind project</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #eceeea; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
+    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #eceeea; z-index: 9999; }
+    #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
+    #__bundler_placeholder { color: #999; font-size: 14px; }
+  </style>
+  <noscript>
+    <style>#__bundler_loading { display: none; }</style>
+    <div style="position:fixed;bottom:12px;left:12px;font:13px/1.4 -apple-system,BlinkMacSystemFont,sans-serif;color:#999;background:rgba(255,255,255,0.9);padding:6px 12px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,0.08);z-index:10000;">
+      This page requires JavaScript to display.
+    </div>
+  </noscript>
+</head>
+<body>
+  <div id="__bundler_thumbnail">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#eceeea"></rect>
+    <rect y="400" width="1200" height="400" fill="#65817e"></rect>
+    <g stroke="#245f45" stroke-width="10" stroke-linecap="round" fill="none">
+      <line x1="360" y1="400" x2="360" y2="215"></line>
+      <line x1="360" y1="215" x2="360" y2="120"></line>
+      <line x1="360" y1="215" x2="440" y2="255"></line>
+      <line x1="360" y1="215" x2="280" y2="255"></line>
+    </g>
+    <g stroke="#2f7d5a" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.8">
+      <line x1="640" y1="400" x2="640" y2="255"></line>
+      <line x1="640" y1="255" x2="640" y2="185"></line>
+      <line x1="640" y1="255" x2="700" y2="290"></line>
+      <line x1="640" y1="255" x2="580" y2="290"></line>
+    </g>
+    <g stroke="#5b7f70" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.6">
+      <line x1="880" y1="400" x2="880" y2="290"></line>
+      <line x1="880" y1="290" x2="880" y2="235"></line>
+      <line x1="880" y1="290" x2="925" y2="315"></line>
+      <line x1="880" y1="290" x2="835" y2="315"></line>
+    </g>
+  </svg>
+</div>
+  <div id="__bundler_loading">Unpacking...</div>
+
+  <script>
+    
+document.addEventListener('DOMContentLoaded', async function() {
+  const loading = document.getElementById('__bundler_loading');
+  function setStatus(msg) { if (loading) loading.textContent = msg; }
+
+  const FONT_MIME = /^(font[/]|application[/](x-)?font-|application[/]vnd\.ms-fontobject)/i;
+  const MIME_TOKEN = /^[\w.+-]+[/][\w.+-]+$/;
+  function toBase64(bytes) {
+    let bin = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    }
+    return btoa(bin);
+  }
+
+  // Error sink persists across replaceWith since it's on window, not the DOM.
+  window.addEventListener('error', function(e) {
+    // Failed resource loads (CSP-blocked links, scripts, images) fire plain
+    // events at the element — warn only; real JS errors carry message/error.
+    if (!e.message && !e.error && e.target && e.target !== window) {
+      console.warn('[bundle] resource failed to load:',
+        e.target.tagName, String(e.target.src || e.target.href || ''));
+      return;
+    }
+    var p = document.body || document.documentElement;
+    var d = document.getElementById('__bundler_err') || p.appendChild(document.createElement('div'));
+    d.id = '__bundler_err';
+    d.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;font:12px/1.4 ui-monospace,monospace;background:#2a1215;color:#ff8a80;padding:10px 14px;border-radius:8px;border:1px solid #5c2b2e;z-index:99999;white-space:pre-wrap;max-height:40vh;overflow:auto';
+    d.textContent = (d.textContent ? d.textContent + String.fromCharCode(10) : '') +
+      '[bundle] ' + (e.message || e.type) +
+      (e.filename ? ' (' + e.filename.slice(0, 60) + ':' + e.lineno + ')' : '');
+  }, true);
+
+  try {
+    const manifestEl = document.querySelector('script[type="__bundler/manifest"]');
+    const templateEl = document.querySelector('script[type="__bundler/template"]');
+    if (!manifestEl || !templateEl) {
+      setStatus('Error: missing bundle data');
+      console.error('[bundler] Missing script tags — manifestEl:', !!manifestEl, 'templateEl:', !!templateEl);
+      return;
+    }
+
+    const manifest = JSON.parse(manifestEl.textContent);
+    let template = JSON.parse(templateEl.textContent);
+
+    // Nested page bundles (iframe targets). Each ships ONCE, in the ROOT
+    // document's manifest; frame srcs carry an about:blank#<uuid> marker
+    // instead of a substitutable uuid. Every document mints the blobs for
+    // its OWN frames — from local text at the root, or text obtained from
+    // its DIRECT parent over the relay protocol below — so each frame
+    // navigation stays same-origin with its initiator and a deduped page
+    // loads at any depth on any host, including a file:// download's
+    // opaque origins (where a blob minted by one document cannot be
+    // navigated to by another).
+    const pageOrderEl = document.querySelector('script[type="__bundler/page_order"]');
+    const pageOrder = pageOrderEl ? JSON.parse(pageOrderEl.textContent) : [];
+    const pageSet = new Set(pageOrder);
+    const pageTexts = {};
+
+    // ── Nested-page text protocol (parent-chain relay) ──
+    // Page bundles ship once, in the ROOT document's manifest. Every
+    // document mints the blobs for its OWN frames, obtaining page text
+    // through a strict parent-chain relay: a document only ever SENDS to
+    // its direct parent (which, for every document the publisher's own
+    // runtime minted, is another publisher document) and only ACCEPTS
+    // text from that direct parent; requests from below are honored only
+    // for the document's own child frames, and the ROOT never sends
+    // upward at all. That last rule is load-bearing: the artifact host's
+    // frame-ancestors allows claude.ai (and friends) to frame an
+    // artifact, so window.top can be a FOREIGN document — a top-addressed
+    // protocol would hand page uuids to that ancestor and accept forged
+    // "page text" from it, minting attacker HTML as an artifact-origin
+    // blob document. The chain never touches the ancestor: requests stop
+    // at the root, replies are origin-addressed per hop (never '*' when
+    // an origin exists), and both directions are origin-gated (on https
+    // a foreign sender's origin can never equal this document's; in
+    // opaque contexts — file:// — everything serializes as 'null', where
+    // an embedded EXTERNAL frame still fails the gate by carrying its
+    // own real origin, and a sandboxed child of such a frame is excluded
+    // by the own-child-frames check plus uuid unguessability). Shape is
+    // deny-by-default: one request form, one reply form, no error
+    // replies.
+    // window.origin is the SERIALIZED SECURITY origin ('null' in opaque
+    // contexts such as a sandboxed preview iframe) — location.origin is
+    // computed from the URL and stays 'https://…' even when the document
+    // is sandboxed, which would misgate every opaque chain.
+    const OWN_TARGET = /^https?:[/][/]/.test(window.origin || '')
+      ? window.origin
+      : '*';
+    function trustedOrigin(e) {
+      if (e.origin === window.origin) return true; // https chains; opaque==opaque
+      // file:// trees: Chrome serializes the file document's origin as
+      // 'file://' while the blob: documents it mints serialize as 'null',
+      // so the two legitimate shapes can never string-match — accept the
+      // pair in both directions. https origins never serialize as either,
+      // and sender identity (own child frame / direct parent) is checked
+      // separately.
+      return (
+        (e.origin === 'null' &&
+          (window.origin === 'file://' ||
+            window.location.protocol === 'file:')) ||
+        (/^file:/.test(e.origin) && window.origin === 'null')
+      );
+    }
+    // Non-empty only in the root document (nested bundles ship an empty
+    // island), so it doubles as the root marker: the root answers from
+    // local text and treats a miss as authoritative — never relaying to
+    // its (possibly foreign) parent.
+    const isPageRoot = pageOrder.length > 0;
+    const blobUrls = {};
+    const resourceBlobs = {};
+    const UUID_SHAPE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+    const pendingFrames = {}; // uuid -> [{el, frag}] awaiting text for own frames
+    const pendingRelays = {}; // uuid -> [childWindow] awaiting text to pass down
+    function mountPage(el, frag, text) {
+      const pageBlob = new Blob([text], { type: 'text/html' });
+      const u = URL.createObjectURL(pageBlob);
+      resourceBlobs[u] = pageBlob;
+      el.src = u + frag;
+    }
+    function deliverPage(uuid, text) {
+      const frames = pendingFrames[uuid];
+      delete pendingFrames[uuid];
+      if (frames) for (const f of frames) mountPage(f.el, f.frag, text);
+      const relays = pendingRelays[uuid];
+      delete pendingRelays[uuid];
+      if (relays) {
+        for (const cw of relays) {
+          try { cw.postMessage({ __bundler_page: uuid, __bundler_text: text }, OWN_TARGET); } catch (err) { /* gone */ }
+        }
+      }
+    }
+    function ownFrameWindows() {
+      const out = [];
+      for (const f of Array.from(document.querySelectorAll('iframe'))) {
+        try { if (f.contentWindow) out.push(f.contentWindow); } catch (err) { /* detached */ }
+      }
+      return out;
+    }
+    window.addEventListener('message', function (e) {
+      const d = e.data;
+      if (!d || typeof d !== 'object' || !e.source) return;
+      // Origin gate first; the structural checks below (own-child-frames
+      // for requests, direct-parent + solicited-uuid for replies, the
+      // root's never-relay rule) are what hold in fully opaque chains
+      // where origin strings can't discriminate — a sandboxed root's
+      // FOREIGN wrapper still fails all three even though both serialize
+      // as real-vs-'null' rather than matching.
+      if (!trustedOrigin(e)) return;
+      if (typeof d.__bundler_need === 'string' && UUID_SHAPE.test(d.__bundler_need)) {
+        // Requests are honored only for this document's own child frames.
+        if (ownFrameWindows().indexOf(e.source) < 0) return;
+        const uuid = d.__bundler_need;
+        const text = pageTexts[uuid];
+        if (typeof text === 'string') {
+          try { e.source.postMessage({ __bundler_page: uuid, __bundler_text: text }, OWN_TARGET); } catch (err) { /* gone */ }
+          return;
+        }
+        if (isPageRoot || window.parent === window) return; // authoritative miss
+        const waiting = pendingRelays[uuid];
+        if (waiting) {
+          if (waiting.indexOf(e.source) < 0) waiting.push(e.source);
+          return;
+        }
+        // Never-answered uuids would otherwise accumulate forever under a
+        // request spray; past the cap (far above any real page count) new
+        // relays are dropped rather than remembered.
+        if (Object.keys(pendingRelays).length >= 128) return;
+        pendingRelays[uuid] = [e.source];
+        window.parent.postMessage({ __bundler_need: uuid }, OWN_TARGET);
+      } else if (
+        typeof d.__bundler_page === 'string' &&
+        UUID_SHAPE.test(d.__bundler_page) &&
+        typeof d.__bundler_text === 'string'
+      ) {
+        // The shape test is load-bearing beyond tidiness: the solicited
+        // check below uses the in operator, which matches prototype keys
+        // ('__proto__', 'constructor') — an unshaped key would reach
+        // deliverPage and throw, painting the error banner.
+        // Text is accepted only from the direct parent — the document
+        // that minted this one.
+        if (e.source !== window.parent || window.parent === window) return;
+        if (!(d.__bundler_page in pendingFrames) && !(d.__bundler_page in pendingRelays)) return;
+        deliverPage(d.__bundler_page, d.__bundler_text);
+      }
+    });
+
+    const uuids = Object.keys(manifest);
+    setStatus('Unpacking ' + uuids.length + ' assets...');
+
+    await Promise.all(uuids.map(async (uuid) => {
+      const entry = manifest[uuid];
+      try {
+        const binaryStr = atob(entry.data);
+        const bytes = new Uint8Array(binaryStr.length);
+        for (let i = 0; i < binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+
+        let finalBytes = bytes;
+        if (entry.compressed) {
+          if (typeof DecompressionStream !== 'undefined') {
+            const ds = new DecompressionStream('gzip');
+            const writer = ds.writable.getWriter();
+            const reader = ds.readable.getReader();
+            writer.write(bytes);
+            writer.close();
+            const chunks = [];
+            let totalLen = 0;
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              chunks.push(value);
+              totalLen += value.length;
+            }
+            finalBytes = new Uint8Array(totalLen);
+            let offset = 0;
+            for (const chunk of chunks) { finalBytes.set(chunk, offset); offset += chunk.length; }
+          } else {
+            console.warn('DecompressionStream not available, asset ' + uuid + ' may not render');
+          }
+        }
+
+        if (pageSet.has(uuid)) {
+          pageTexts[uuid] = new TextDecoder().decode(finalBytes);
+          return;
+        }
+        if (FONT_MIME.test(entry.mime) && MIME_TOKEN.test(entry.mime)) {
+          // Strict artifact hosts allow font-src data: but not blob:.
+          blobUrls[uuid] = 'data:' + entry.mime + ';base64,' +
+            (entry.compressed ? toBase64(finalBytes) : entry.data);
+        } else {
+          const blob = new Blob([finalBytes], { type: entry.mime });
+          blobUrls[uuid] = URL.createObjectURL(blob);
+          resourceBlobs[blobUrls[uuid]] = blob;
+        }
+      } catch (err) {
+        console.error('Failed to decode asset ' + uuid + ':', err);
+        const blob = new Blob([], { type: entry.mime });
+        blobUrls[uuid] = URL.createObjectURL(blob);
+        resourceBlobs[blobUrls[uuid]] = blob;
+      }
+    }));
+
+    const extResEl = document.querySelector('script[type="__bundler/ext_resources"]');
+    const extResources = extResEl ? JSON.parse(extResEl.textContent) : [];
+    const resourceMap = {};
+    for (const entry of extResources) {
+      if (blobUrls[entry.uuid]) resourceMap[entry.id] = blobUrls[entry.uuid];
+    }
+
+    // Artifact-host CSP (connect-src 'self') refuses fetch() of blob: URLs —
+    // consumers read these Blobs directly. Survives the swap like the error sink.
+    window.__resourceBlobs = resourceBlobs;
+
+    setStatus('Rendering...');
+    // Page uuids have no blob here — they ride inside about:blank#<uuid>
+    // frame markers the pass below resolves after the swap.
+    for (const uuid of uuids) {
+      if (pageSet.has(uuid)) continue;
+      template = template.split(uuid).join(blobUrls[uuid]);
+    }
+
+    // Strip integrity + crossorigin — blob URLs from a file:// document inherit
+    // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
+    // The manifest bytes are ours; SRI protects against CDN compromise, not this.
+    template = template.replace(/\s+integrity="[^"]*"/gi, '').replace(/\s+crossorigin="[^"]*"/gi, '');
+
+    const resourceScript = '<script>window.__resources = ' +
+      JSON.stringify(resourceMap).replace(/<\//g, '<\\/') +
+      ';</' + 'script>';
+    // Inject after <head> so the DOCTYPE stays first; prepending the script
+    // would push the parser into quirks mode. DOMParser always emits a <head>
+    // (synthesizing one if the source HTML omitted it) but may carry
+    // attributes through, so match the full opening tag. slice() rather than
+    // replace() keeps us clear of $-pattern substitution in resourceScript.
+    const headOpen = template.match(/<head[^>]*>/i);
+    if (headOpen) {
+      const i = headOpen.index + headOpen[0].length;
+      template = template.slice(0, i) + resourceScript + template.slice(i);
+    }
+
+    // Parse the template and swap the root element. Scripts inserted via
+    // DOMParser/replaceWith are inert per spec — re-create each with
+    // createElement so they execute, awaiting onload for src scripts to
+    // preserve ordering (React before ReactDOM before Babel before text/babel).
+    const doc = new DOMParser().parseFromString(template, 'text/html');
+    document.documentElement.replaceWith(doc.documentElement);
+
+    // Resolve page-frame markers: mint this document's own blob for each
+    // framed page — from local text when this is the root, otherwise by
+    // asking the direct parent over the relay protocol above. An
+    // unanswered request leaves the frame on about:blank, the same
+    // degraded state as a refused embed.
+    {
+      const MARKER = /^about:blank#([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(#.*)?$/;
+      const needed = [];
+      for (const el of Array.from(document.querySelectorAll('iframe'))) {
+        const m = MARKER.exec(el.getAttribute('src') || '');
+        if (!m) continue;
+        const text = pageTexts[m[1]];
+        if (typeof text === 'string') {
+          mountPage(el, m[2] || '', text);
+        } else if (window.parent !== window && !isPageRoot) {
+          const had = pendingFrames[m[1]];
+          (pendingFrames[m[1]] = had || []).push({ el: el, frag: m[2] || '' });
+          if (!had) needed.push(m[1]);
+        }
+      }
+      for (const uuid of needed) {
+        window.parent.postMessage({ __bundler_need: uuid }, OWN_TARGET);
+      }
+    }
+
+    const dead = Array.from(document.scripts);
+    for (const old of dead) {
+      const s = document.createElement('script');
+      for (const a of old.attributes) s.setAttribute(a.name, a.value);
+      s.textContent = old.textContent;
+      // text/babel scripts with a src: read and inline. transformScriptTags
+      // does XHR against the src, but blob:null/ from a file:// origin is
+      // silently dropped. Inlining makes it a plain inline babel script,
+      // which transformScriptTags handles unconditionally.
+      if ((s.type === 'text/babel' || s.type === 'text/jsx') && s.src) {
+        const pre = resourceBlobs[s.src.split('#')[0]];
+        s.textContent = pre ? await pre.text() : await (await fetch(s.src)).text();
+        s.removeAttribute('src');
+      }
+      const p = s.src ? new Promise(function(r) { s.onload = s.onerror = r; }) : null;
+      old.replaceWith(s);
+      if (p) await p;
+    }
+    // Babel standalone auto-transforms type=text/babel on DOMContentLoaded,
+    // which fired before we swapped the document. Trigger manually if present.
+    if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
+      window.Babel.transformScriptTags();
+    }
+  } catch (err) {
+    setStatus('Error unpacking: ' + err.message);
+    console.error('Bundle unpack error:', err);
+  }
+});
+
+  </script>
+
+  <script type="__bundler/manifest">
+{}
+  </script>
+
+  <script type="__bundler/ext_resources">
+[]
+  </script>
+
+  <script type="__bundler/page_order">
+[]
+  </script>
+
+  <script type="__bundler/template">
+"<!DOCTYPE html>\n<html lang=\"en\"><head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Forty years of an offshore wind project<\u002Ftitle>\n\n<style>\n  :root{\n    --paper:#eceeea;\n    --paper-2:#e3e6e0;\n    --ink:#151d1a;\n    --sub:#495450;\n    --line:#c7cdc5;\n    --green:#2f7d5a;\n    --green-deep:#245f45;\n    --pill:#0f1c18;\n    --pill-ink:#eff4f0;\n    --focus:#1f6f4c;\n  }\n  *{box-sizing:border-box;}\n  html,body{margin:0;padding:0;}\n  body{\n    background:var(--paper);\n    color:var(--ink);\n    font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif;\n    line-height:1.5;\n    -webkit-font-smoothing:antialiased;\n  }\n  .wrap{\n    max-width:960px;\n    margin:0 auto;\n    padding:28px 20px 56px;\n  }\n  header.intro{margin-bottom:20px;}\n  .kicker{\n    font-size:12px;\n    letter-spacing:.14em;\n    text-transform:uppercase;\n    color:var(--green-deep);\n    font-weight:600;\n    margin:0 0 10px;\n  }\n  h1{\n    font-family:Georgia,\"Times New Roman\",serif;\n    font-weight:600;\n    font-size:clamp(24px,4.4vw,38px);\n    line-height:1.12;\n    letter-spacing:-.01em;\n    margin:0 0 12px;\n    text-wrap:balance;\n  }\n  .standfirst{\n    font-family:Georgia,\"Times New Roman\",serif;\n    font-size:clamp(15px,2.2vw,18px);\n    color:var(--sub);\n    max-width:62ch;\n    margin:0;\n    text-wrap:pretty;\n  }\n  .stage-wrap{\n    position:relative;\n    margin-top:24px;\n    border:1px solid var(--line);\n    border-radius:10px;\n    overflow:hidden;\n    background:#dfe4dd;\n  }\n  canvas{display:block;width:100%;height:auto;touch-action:pan-y;}\n  /* year badge on the canvas */\n  .yearbadge{\n    position:absolute;top:12px;left:12px;\n    background:var(--pill);color:var(--pill-ink);\n    border-radius:8px;padding:8px 12px;\n    display:flex;align-items:baseline;gap:8px;\n    pointer-events:none;\n  }\n  .yearbadge .yr{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;}\n  .yearbadge .of{white-space:nowrap;}\n  .yearbadge .of{font-size:12px;opacity:.72;letter-spacing:.02em;}\n\n  /* ---- timeline slider ---- */\n  .controls{margin-top:22px;}\n  .slider-head{\n    display:flex;justify-content:space-between;align-items:flex-end;\n    gap:12px;margin-bottom:8px;flex-wrap:wrap;\n  }\n  .slider-head .lbl{font-size:13px;color:var(--sub);letter-spacing:.02em;}\n  .slider-wrap{position:relative;height:74px;user-select:none;}\n  .segbar{\n    position:absolute;left:0;right:0;top:10px;height:40px;\n    display:flex;border-radius:7px;overflow:hidden;\n    border:1px solid var(--line);\n  }\n  .seg{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}\n  .seg .segname{\n    font-size:11px;font-weight:600;letter-spacing:.02em;\n    color:#fff;padding:0 6px;white-space:nowrap;\n    text-overflow:ellipsis;overflow:hidden;max-width:100%;\n    mix-blend-mode:normal;\n  }\n  .seg.small .segname{display:none;}\n  .seg .segyears{\n    position:absolute;bottom:2px;right:5px;font-size:9px;color:rgba(255,255,255,.8);\n    font-variant-numeric:tabular-nums;\n  }\n  .seg.active{outline:2px solid var(--ink);outline-offset:-2px;}\n  input[type=range]{\n    position:absolute;left:-2px;right:-2px;top:2px;width:calc(100% + 4px);height:56px;margin:0;\n    background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer;\n  }\n  input[type=range]:focus{outline:none;}\n  input[type=range]::-webkit-slider-runnable-track{background:transparent;height:56px;}\n  input[type=range]::-moz-range-track{background:transparent;height:56px;}\n  input[type=range]::-webkit-slider-thumb{\n    -webkit-appearance:none;appearance:none;\n    width:22px;height:56px;border:none;background:transparent;cursor:grab;\n  }\n  input[type=range]::-moz-range-thumb{\n    width:22px;height:56px;border:none;background:transparent;cursor:grab;\n  }\n  input[type=range]:active::-webkit-slider-thumb{cursor:grabbing;}\n  .thumb{\n    position:absolute;top:2px;width:8px;height:56px;pointer-events:none;\n    transform:translateX(-50%);\n  }\n  .thumb .stem{position:absolute;left:50%;top:0;width:3px;height:56px;transform:translateX(-50%);background:var(--ink);border-radius:2px;}\n  .thumb .knob{\n    position:absolute;left:50%;top:50%;width:26px;height:26px;border-radius:50%;\n    transform:translate(-50%,-50%);background:var(--green);border:3px solid var(--paper);\n    box-shadow:0 1px 3px rgba(0,0,0,.35);\n  }\n  input[type=range]:focus-visible ~ .thumb .knob{\n    outline:3px solid var(--focus);outline-offset:3px;\n  }\n  .ticks{position:absolute;left:0;right:0;top:10px;height:40px;pointer-events:none;}\n  .tick{position:absolute;top:-4px;width:1px;height:48px;background:rgba(21,29,26,.35);}\n\n  .stepnav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}\n  .stepnav button{\n    font:inherit;font-size:13px;font-weight:600;\n    background:var(--paper-2);color:var(--ink);\n    border:1px solid var(--line);border-radius:8px;\n    min-height:44px;padding:0 14px;cursor:pointer;\n    display:inline-flex;align-items:center;gap:6px;\n  }\n  .stepnav button:hover{border-color:var(--sub);}\n  .stepnav button:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}\n  .stepnav button:disabled{opacity:.4;cursor:default;}\n  .stepnav .spacer{flex:1;}\n\n  /* ---- stage panel ---- */\n  .panel{margin-top:30px;}\n  .panel-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px;}\n  .panel-head h2{\n    font-family:Georgia,\"Times New Roman\",serif;font-weight:600;\n    font-size:clamp(20px,3vw,27px);margin:0;letter-spacing:-.01em;\n    transition:opacity .28s ease;\n  }\n  .panel-head .dur{\n    font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;\n    color:#fff;background:var(--green);border-radius:20px;padding:4px 11px;\n    transition:opacity .28s ease;\n  }\n  .fields{\n    display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));\n    gap:2px;background:var(--line);\n    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:16px;\n  }\n  .field{background:var(--paper);padding:15px 16px;transition:opacity .28s ease;}\n  .field .flabel{\n    font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;\n    color:var(--green-deep);margin:0 0 7px;\n  }\n  .field .fval{font-size:15px;margin:0;color:var(--ink);text-wrap:pretty;}\n  .field.wide{grid-column:1 / -1;}\n  .fields.fade{opacity:0;}\n  .fields{transition:opacity .18s ease;}\n\n  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}\n\n  footer.note{margin-top:34px;font-size:12.5px;color:var(--sub);border-top:1px solid var(--line);padding-top:14px;max-width:70ch;}\n  footer.note strong{color:var(--ink);font-weight:600;}\n\n  @media (max-width:520px){\n    .wrap{padding:22px 15px 44px;}\n    .field .fval{font-size:14.5px;}\n  }\n<\u002Fstyle>\n<\u002Fhead>\n<body>\n<div class=\"wrap\">\n  <header class=\"intro\">\n    <p class=\"kicker\">Offshore wind · project lifecycle<\u002Fp>\n    <h1>Forty years, and most of it is nothing to see<\u002Fh1>\n    <p class=\"standfirst\">An offshore wind project runs for around four decades. For almost all of that time there is little above the water. Move through the years — each stage has a different workforce, a different footprint, and a very different length.<\u002Fp>\n  <\u002Fheader>\n\n  <div class=\"stage-wrap\">\n    <canvas id=\"scene\" aria-hidden=\"true\"><\u002Fcanvas>\n    <div class=\"yearbadge\"><span class=\"yr\" id=\"badgeYear\">Year 0<\u002Fspan><span class=\"of\" id=\"badgeStage\">Development<\u002Fspan><\u002Fdiv>\n  <\u002Fdiv>\n\n  <div class=\"controls\">\n    <div class=\"slider-head\">\n      <span class=\"lbl\">Drag through the project year<\u002Fspan>\n      <span class=\"lbl\" id=\"rangeHint\">Year 0 of 40<\u002Fspan>\n    <\u002Fdiv>\n    <div class=\"slider-wrap\">\n      <div class=\"segbar\" id=\"segbar\" aria-hidden=\"true\"><\u002Fdiv>\n      <div class=\"ticks\" id=\"ticks\" aria-hidden=\"true\"><\u002Fdiv>\n      <input type=\"range\" id=\"year\" min=\"0\" max=\"40\" step=\"0.1\" value=\"0\" aria-label=\"Project year, 0 to 40\">\n      <div class=\"thumb\" id=\"thumb\"><span class=\"stem\"><\u002Fspan><span class=\"knob\"><\u002Fspan><\u002Fdiv>\n    <\u002Fdiv>\n    <div class=\"stepnav\">\n      <button id=\"prevBtn\" type=\"button\">‹ Previous stage<\u002Fbutton>\n      <button id=\"nextBtn\" type=\"button\">Next stage ›<\u002Fbutton>\n      <span class=\"spacer\"><\u002Fspan>\n    <\u002Fdiv>\n  <\u002Fdiv>\n\n  <section class=\"panel\" aria-label=\"Current stage detail\">\n    <div class=\"panel-head\">\n      <h2 id=\"pName\">Development<\u002Fh2>\n      <span class=\"dur\" id=\"pDur\">Years 1 to 10<\u002Fspan>\n    <\u002Fdiv>\n    <div class=\"fields\" id=\"fields\"><\u002Fdiv>\n  <\u002Fsection>\n\n  <div class=\"sr-only\" aria-live=\"polite\" id=\"live\"><\u002Fdiv>\n\n  <footer class=\"note\">\n    <strong>How to read this.<\u002Fstrong> The coloured bar above the slider is the timeline drawn to scale: the wide green band is operations and maintenance, the quiet 25 to 30 years when the turbines simply turn. Development and the two short bursts of building and dismantling sit either side of it. Durations follow the ranges given for each stage.\n  <\u002Ffooter>\n<\u002Fdiv>\n\n<script>\n(function(){\n\"use strict\";\n\n/* ---------------------------------------------------------------\n   CONTENT (verbatim from source)\n--------------------------------------------------------------- */\nconst STAGES = [\n  {\n    key:\"dev\", name:\"Development\", chip:\"Years 1 to 10\",\n    start:0, end:10, center:5,\n    live:\"For years the project is measured, designed and approved before anything is built.\",\n    fields:[\n      [\"What's happening\",\"Wind, seabed and marine life measured across years; existing sea users identified and consulted; cultural heritage assessment begun; grid connection investigated; the project designed, costed and financed.\",true],\n      [\"Who's working\",\"Ecologists, marine scientists, surveyors, engineers, planners, cultural heritage specialists, engagement staff and analysts.\",false],\n      [\"What you'd see from shore\",\"A survey vessel, occasionally. Nothing else.\",false],\n      [\"How long\",\"Five to 10 years.\",false],\n      [\"Before the next stage\",\"Environmental approval, a commercial licence, a grid connection and a final investment decision.\",false],\n    ]\n  },\n  {\n    key:\"con\", name:\"Construction\", chip:\"Two to four years\",\n    start:10, end:13, center:11.5,\n    live:\"In a short, intense burst the foundations, turbines and cables are installed and connected.\",\n    fields:[\n      [\"What's happening\",\"Foundations installed, turbines assembled and erected, array and export cables laid and buried, offshore substation placed, landfall built, the whole thing commissioned.\",true],\n      [\"Who's working\",\"The largest workforce of any stage, on vessels, at ports and onshore, mostly employed by contractors rather than the developer.\",false],\n      [\"What you'd see from shore\",\"Port activity, heavy transport on local roads, vessels working on the horizon, cable works at the landfall.\",false],\n      [\"How long\",\"Two to four years.\",false],\n      [\"Before the next stage\",\"Commissioning complete and the connection energised.\",false],\n    ]\n  },\n  {\n    key:\"om\", name:\"Operations and maintenance\", chip:\"25 to 30 years\",\n    start:13, end:38, center:25.5,\n    live:\"For decades the turbines simply turn, tended by a small local crew going out and back each day.\",\n    fields:[\n      [\"What's happening\",\"Scheduled maintenance, unscheduled repair, remote monitoring, warehousing and logistics.\",true],\n      [\"Who's working\",\"Technicians, vessel crews, control room staff, schedulers, logistics and warehouse staff, based at a permanent local operations base.\",false],\n      [\"What you'd see from shore\",\"Crew transfer vessels leaving in the morning and returning at night, and the turbines turning.\",false],\n      [\"How long\",\"25 to 30 years.\",false],\n      [\"Before the next stage\",\"The end of the operating life, and a decision about what replaces it.\",false],\n    ]\n  },\n  {\n    key:\"dec\", name:\"Decommissioning or repowering\", chip:\"Two to three years\",\n    start:38, end:40, center:39,\n    live:\"At the end of its life the project is taken down and removed, or rebuilt on the same connection.\",\n    fields:[\n      [\"What's happening\",\"Disconnection from the grid, dismantling, removal, and either site rehabilitation or installation of newer turbines on the existing connection.\",true],\n      [\"Who's working\",\"Heavy lift and marine construction crews again, plus recycling and waste specialists.\",false],\n      [\"What you'd see from shore\",\"The reverse of construction.\",false],\n      [\"How long\",\"Two to three years.\",false],\n      [\"What has to be true first\",\"A regulatory and economic decision made decades from now, which no project can promise today.\",false],\n    ]\n  },\n];\nconst SEG_COLORS = [\"#5b7f70\",\"#3f8f6b\",\"#2f7d5a\",\"#7a8b6f\"];\n\n/* ---------------------------------------------------------------\n   PALETTE + colour helpers\n--------------------------------------------------------------- */\nfunction hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}\nconst PAL = {\n  skyTop:hx('#b9c6c2'), skyLow:hx('#dbe1da'),\n  sea:hx('#65817e'), seaFar:hx('#9fb2ac'), seaDeep:hx('#3b524f'),\n  green:hx('#2f7d5a'), ink:hx('#16211d'), light:hx('#eff3ee'),\n  sun:hx('#f2efe2'), land:hx('#4c574c')\n};\nfunction mix(a,b,t){t=Math.max(0,Math.min(1,t));return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}\nfunction rgb(c,a){return a==null?`rgb(${c[0]|0},${c[1]|0},${c[2]|0})`:`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`;}\nfunction clamp(v,a,b){return v<a?a:v>b?b:v;}\nfunction smooth(a,b,x){x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x);}\nfunction lerp(a,b,t){return a+(b-a)*t;}\n\n/* ---------------------------------------------------------------\n   CANVAS setup\n--------------------------------------------------------------- */\nconst canvas=document.getElementById('scene');\nconst ctx=canvas.getContext('2d');\nlet CSSW=0, CSSH=0, DPR=1;\nfunction resize(){\n  const wrap=canvas.parentElement;\n  CSSW=wrap.clientWidth;\n  CSSH=Math.round(clamp(CSSW*0.58, 240, 540));\n  DPR=Math.min(2, window.devicePixelRatio||1);\n  canvas.width=Math.round(CSSW*DPR);\n  canvas.height=Math.round(CSSH*DPR);\n  canvas.style.height=CSSH+'px';\n}\nwindow.addEventListener('resize',resize);\n\n/* ---------------------------------------------------------------\n   GEOMETRY  — everything derived from CSSW / CSSH\n--------------------------------------------------------------- */\nconst NT=6;\nfunction geo(){\n  const w=CSSW,h=CSSH;\n  const horizon=h*0.50;\n  const shoreY=h*0.985;\n  const g={w,h,horizon,shoreY};\n  g.sunX=w*0.74; g.sunY=h*0.24;\n  // turbines strung along the horizon, receding to the right\n  g.turb=[];\n  for(let i=0;i<NT;i++){\n    const d=i/(NT-1);                 // 0 near .. 1 far\n    const x=lerp(w*0.30, w*1.02, d);\n    const sc=lerp(1.0, 0.5, d);\n    const baseY=horizon - h*0.005 + d*h*0.01;\n    g.turb.push({x,baseY,sc,d,towerH:h*0.28*sc, hairScale:sc});\n  }\n  // offshore substation, between shore and array\n  g.sub={x:w*0.20,baseY:horizon+h*0.02,sc:0.9};\n  // mid-sea vessel lane (where working boats sit)\n  g.vesselY=lerp(horizon, shoreY, 0.5);\n  g.landfallX=w*0.12;\n  return g;\n}\n\n/* ---------------------------------------------------------------\n   STATE + CAMERA\n--------------------------------------------------------------- */\nlet year=0;                 // authoritative value (driven by slider)\nconst cam={fx:0.5, lz:0, ready:false};   // fx frac, lz = log zoom\nconst CAMTARGETS=[          // per stage: focus x fraction, zoom\n  {fx:0.52, z:1.10},        // dev\n  {fx:0.40, z:1.34},        // con\n  {fx:0.60, z:1.04},        // om\n  {fx:0.46, z:1.30},        // dec\n];\nfunction camTargetFor(y){\n  const c=STAGES.map(s=>s.center);\n  if(y<=c[0]) return CAMTARGETS[0];\n  if(y>=c[3]) return CAMTARGETS[3];\n  for(let i=0;i<3;i++){\n    if(y<=c[i+1]){\n      const t=smooth(c[i],c[i+1],y);\n      return {fx:lerp(CAMTARGETS[i].fx,CAMTARGETS[i+1].fx,t),\n              z:Math.exp(lerp(Math.log(CAMTARGETS[i].z),Math.log(CAMTARGETS[i+1].z),t))};\n    }\n  }\n  return CAMTARGETS[3];\n}\n// stage focus strength for element crossfade\nfunction strength(s,y){\n  if(y>=s.start && y<=s.end) return 1;\n  const d = y<s.start ? s.start-y : y-s.end;\n  return clamp(1 - d/3.0, 0, 1);\n}\n\nconst reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;\nconst AMB=reduceMotion?0.25:1;\n\nlet curFocusX=0, curFocusY=0, curZoom=1;\nfunction worldToScreen(wx,wy){\n  return [(wx-curFocusX)*curZoom + CSSW/2, (wy-curFocusY)*curZoom + CSSH/2];\n}\n\n/* ---------------------------------------------------------------\n   DRAW helpers\n--------------------------------------------------------------- */\nfunction fillTurbine(g,t,p,angle,alpha,H){\n  if(alpha<=0.001) return;\n  ctx.save();\n  ctx.globalAlpha*=alpha;\n  const towerBuild=smooth(0.04,0.62,p);\n  const towerH=t.towerH*towerBuild;\n  const topY=t.baseY-towerH;\n  const tw=Math.max(1.2, t.towerH*0.045);\n  const towerCol=mix(PAL.ink,PAL.seaDeep,0.25);\n  // foundation / transition piece just above water\n  if(p>0.12){\n    ctx.fillStyle=rgb(mix(towerCol,PAL.green,0.15));\n    const fh=t.towerH*0.10;\n    ctx.fillRect(t.x-tw*0.85, t.baseY-fh, tw*1.7, fh+ t.h*0);\n  }\n  // tapered tower\n  ctx.fillStyle=rgb(towerCol);\n  ctx.beginPath();\n  ctx.moveTo(t.x-tw*0.75, t.baseY);\n  ctx.lineTo(t.x-tw*0.42, topY);\n  ctx.lineTo(t.x+tw*0.42, topY);\n  ctx.lineTo(t.x+tw*0.75, t.baseY);\n  ctx.closePath();\n  ctx.fill();\n  // nacelle + blades\n  if(p>0.6){\n    const na=smooth(0.6,0.78,p);\n    ctx.fillStyle=rgb(mix(towerCol,PAL.light,0.15));\n    const nw=tw*2.6*na, nh=tw*1.5*na;\n    ctx.fillRect(t.x-nw*0.4, topY-nh*0.5, nw, nh);\n    const hubX=t.x, hubY=topY;\n    const bl=t.towerH*0.5*smooth(0.6,1,p);\n    const bw=Math.max(1.4,tw*0.85);\n    ctx.strokeStyle=rgb(mix(PAL.light,PAL.green,0.28));\n    ctx.lineCap='round';\n    ctx.lineWidth=bw;\n    for(let b=0;b<3;b++){\n      const a=angle + b*(Math.PI*2/3);\n      ctx.beginPath();\n      ctx.moveTo(hubX,hubY);\n      ctx.lineTo(hubX+Math.cos(a)*bl, hubY+Math.sin(a)*bl);\n      ctx.stroke();\n    }\n    ctx.fillStyle=rgb(PAL.ink);\n    ctx.beginPath();ctx.arc(hubX,hubY,bw*0.9,0,7);ctx.fill();\n  }\n  ctx.restore();\n}\n\nfunction drawVesselHull(x,y,len,col,alpha){\n  if(alpha<=0.001)return;\n  ctx.save();ctx.globalAlpha*=alpha;\n  ctx.fillStyle=rgb(col);\n  const hh=len*0.22;\n  ctx.beginPath();\n  ctx.moveTo(x-len*0.5,y);\n  ctx.lineTo(x+len*0.5,y);\n  ctx.lineTo(x+len*0.38,y+hh);\n  ctx.lineTo(x-len*0.42,y+hh);\n  ctx.closePath();ctx.fill();\n  ctx.restore();\n}\n\nfunction roundRect(x,y,w,h,r){\n  ctx.beginPath();\n  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);\n  ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();\n}\n\n/* ---------------------------------------------------------------\n   MAIN RENDER\n--------------------------------------------------------------- */\nlet tPrev=0, tSec=0;\nwindow.__renderErr='none';\nfunction safeRender(ts){ try{ render(ts); }catch(e){ window.__renderErr=(e&&(e.stack||e.message))||String(e); } }\nfunction render(ts){\n  if(!tPrev)tPrev=ts;\n  let dt=(ts-tPrev)/1000; tPrev=ts;\n  if(dt>0.1)dt=0.1;\n  tSec+=dt;\n\n  // self-healing sizing: re-measure if unset or the container changed width\n  const cw=canvas.parentElement.clientWidth;\n  if(cw>0 && cw!==CSSW){ resize(); updateThumb(); }\n\n  const g=geo();\n\n  // ---- camera easing ----\n  const tgt=camTargetFor(year);\n  if(!cam.ready){cam.fx=tgt.fx;cam.lz=Math.log(tgt.z);cam.ready=true;}\n  const k=3.2;\n  const e=1-Math.exp(-dt*k);\n  cam.fx += (tgt.fx-cam.fx)*e;\n  cam.lz += (Math.log(tgt.z)-cam.lz)*e;\n  curZoom=Math.exp(cam.lz);\n  curFocusX=g.w*cam.fx;\n  curFocusY=g.h*0.55;\n  const H=1/curZoom;   // hairline\n\n  // ---- stage progresses ----\n  const conProg=clamp((year-10)/(13-10),0,1);\n  const decProg=clamp((year-38)/(40-38),0,1);\n  const sDev=strength(STAGES[0],year), sCon=strength(STAGES[1],year),\n        sOm=strength(STAGES[2],year), sDec=strength(STAGES[3],year);\n  // O&M-only elements (crew transfer vessel, operations base) clear as decommissioning begins\n  const omLive=sOm*(year<13?Math.max(0,1-(13-year)/0.8):1)*(year<38?1:Math.max(0,1-(year-38)/0.8));\n  // Development survey elements clear as construction begins\n  const devLive=year<=10?sDev:Math.max(0,sDev*(1-(year-10)/0.8));\n\n  // build progress per turbine\n  const p=[];\n  for(let i=0;i<NT;i++){\n    let pi;\n    if(year<10) pi=0;\n    else if(year<13) pi=clamp(conProg*NT - i,0,1);          // nearest first\n    else if(year<38) pi=1;\n    else pi=clamp(1-(decProg*NT - i),0,1);                  // nearest removed first\n    p.push(pi);\n  }\n\n  // ================= DEVICE-SPACE clear =================\n  ctx.setTransform(DPR,0,0,DPR,0,0);\n  ctx.clearRect(0,0,g.w,g.h);\n\n  // ---- sky ----\n  let sky=ctx.createLinearGradient(0,0,0,g.horizon);\n  sky.addColorStop(0,rgb(PAL.skyTop));\n  sky.addColorStop(1,rgb(PAL.skyLow));\n  ctx.fillStyle=sky;ctx.fillRect(0,0,g.w,g.horizon+2);\n\n  // ---- APPLY CAMERA for world drawing ----\n  ctx.save();\n  ctx.translate(g.w/2,g.h/2);\n  ctx.scale(curZoom,curZoom);\n  ctx.translate(-curFocusX,-curFocusY);\n\n  // sun glow (soft, low)\n  const sg=ctx.createRadialGradient(g.sunX,g.sunY,0,g.sunX,g.sunY,g.h*0.5);\n  sg.addColorStop(0,rgb(PAL.sun,0.55));\n  sg.addColorStop(1,rgb(PAL.sun,0));\n  ctx.fillStyle=sg;ctx.fillRect(-g.w,-g.h,g.w*3,g.h*2);\n\n  // haze band at horizon\n  const hz=ctx.createLinearGradient(0,g.horizon-g.h*0.10,0,g.horizon+g.h*0.04);\n  hz.addColorStop(0,rgb(PAL.light,0));\n  hz.addColorStop(0.6,rgb(PAL.light,0.55));\n  hz.addColorStop(1,rgb(PAL.light,0));\n  ctx.fillStyle=hz;ctx.fillRect(-g.w,g.horizon-g.h*0.10,g.w*3,g.h*0.14);\n\n  // ---- sea ----\n  let sea=ctx.createLinearGradient(0,g.horizon,0,g.h);\n  sea.addColorStop(0,rgb(PAL.seaFar));\n  sea.addColorStop(0.35,rgb(PAL.sea));\n  sea.addColorStop(1,rgb(PAL.seaDeep));\n  ctx.fillStyle=sea;ctx.fillRect(-g.w,g.horizon,g.w*3,g.h-g.horizon+2);\n  // gentle shimmer lines (single subtle ambient on the water)\n  ctx.strokeStyle=rgb(PAL.light,0.10);\n  ctx.lineWidth=1.2*H;\n  for(let i=0;i<5;i++){\n    const yy=lerp(g.horizon+g.h*0.05,g.h*0.95,i/4);\n    const ph=Math.sin(tSec*0.35*AMB + i*1.7)*g.w*0.01;\n    ctx.beginPath();\n    ctx.moveTo(-g.w, yy);\n    ctx.lineTo(g.w*2, yy+ph);\n    ctx.stroke();\n  }\n\n  // ---- export + array cable route (dashed, animated dash offset) ----\n  // faint always; brightens during construction & O&M (power flowing)\n  const cableAlpha=0.18 + 0.5*Math.max(sCon,sOm*0.7) + 0.3*sDec*decProg;\n  ctx.save();\n  ctx.globalAlpha=clamp(cableAlpha,0,0.85);\n  ctx.strokeStyle=rgb(mix(PAL.ink,PAL.green,0.35));\n  ctx.lineWidth=1.6*H;\n  ctx.setLineDash([7*H,7*H]);\n  ctx.lineDashOffset=-(tSec*14*AMB)%1000;\n  ctx.beginPath();\n  ctx.moveTo(g.landfallX, g.shoreY-g.h*0.02);\n  ctx.lineTo(g.sub.x, g.sub.baseY+g.h*0.03);\n  // along the array\n  for(let i=0;i<NT;i++){ if(p[i]>0.1) ctx.lineTo(g.turb[i].x, g.turb[i].baseY+g.h*0.02); }\n  ctx.stroke();\n  ctx.setLineDash([]);\n  ctx.restore();\n\n  // ---- offshore substation (built during construction, lifted away during decommissioning) ----\n  const subRemove=year<38?1:clamp(1-(decProg-0.15)/0.5,0,1);\n  const subP=clamp((conProg*NT-0.5),0,1)*(year>=10?1:0)*subRemove;\n  const subAlpha=(year>=10)?clamp((0.25+Math.max(sCon,sOm))*subRemove,0,1):0;\n  if(subAlpha>0.01 && subP>0.05){\n    ctx.save();ctx.globalAlpha*=subAlpha;\n    const s=g.sub, u=g.h*0.05*s.sc*subP;\n    ctx.fillStyle=rgb(mix(PAL.ink,PAL.seaDeep,0.2));\n    // legs\n    ctx.lineWidth=2*H;ctx.strokeStyle=rgb(mix(PAL.ink,PAL.seaDeep,0.2));\n    ctx.beginPath();\n    ctx.moveTo(s.x-u*0.7,s.baseY);ctx.lineTo(s.x-u*0.5,s.baseY-u);\n    ctx.moveTo(s.x+u*0.7,s.baseY);ctx.lineTo(s.x+u*0.5,s.baseY-u);\n    ctx.stroke();\n    // deck + block\n    ctx.fillRect(s.x-u*0.75, s.baseY-u*1.35, u*1.5, u*0.55);\n    ctx.fillStyle=rgb(mix(PAL.ink,PAL.green,0.25));\n    ctx.fillRect(s.x-u*0.45, s.baseY-u*1.75, u*0.9, u*0.5);\n    ctx.restore();\n  }\n\n  // ---- turbines (far to near so near overlaps) ----\n  const baseAngle=tSec*0.55*AMB;\n  for(let i=NT-1;i>=0;i--){\n    const t=g.turb[i];\n    // near-full alpha; slightly veil distant ones\n    const distVeil=lerp(1,0.82,t.d);\n    fillTurbine(g,t,p[i], baseAngle + i*0.5, distVeil, H);\n  }\n\n  // ---- working vessels per stage ----\n  // Development: survey vessel with sonar fan to seabed\n  let devVx=0, devVy=0;\n  if(devLive>0.02){\n    const vx=lerp(g.w*0.44,g.w*0.6, 0.5+0.5*Math.sin(tSec*0.15*AMB));\n    const vy=g.vesselY;\n    devVx=vx; devVy=vy;\n    ctx.save();ctx.globalAlpha*=devLive;\n    // sonar fan\n    ctx.fillStyle=rgb(PAL.light,0.16);\n    ctx.beginPath();\n    ctx.moveTo(vx,vy+g.h*0.01);\n    ctx.lineTo(vx-g.w*0.03, g.h*0.99);\n    ctx.lineTo(vx+g.w*0.03, g.h*0.99);\n    ctx.closePath();ctx.fill();\n    ctx.restore();\n    drawVesselHull(vx,vy,g.w*0.05,mix(PAL.ink,PAL.seaDeep,0.15),devLive);\n  }\n  // Construction: jack-up / installation vessel by the nearest building turbine\n  if(sCon>0.02){\n    const near=g.turb[Math.min(NT-1, Math.floor(conProg*NT))]||g.turb[0];\n    const vx=near.x - g.w*0.05, vy=g.vesselY*0.96;\n    drawVesselHull(vx,vy,g.w*0.07,mix(PAL.ink,PAL.seaDeep,0.1),sCon);\n    ctx.save();ctx.globalAlpha*=sCon;\n    ctx.strokeStyle=rgb(PAL.ink);ctx.lineWidth=2*H;ctx.lineCap='round';\n    // crane arm\n    ctx.beginPath();\n    ctx.moveTo(vx, vy);\n    ctx.lineTo(vx+g.w*0.02, vy-g.h*0.13);\n    ctx.lineTo(near.x, near.baseY-near.towerH*0.5);\n    ctx.stroke();\n    // legs into water\n    ctx.beginPath();\n    ctx.moveTo(vx-g.w*0.025, vy);ctx.lineTo(vx-g.w*0.025, g.h*0.9);\n    ctx.moveTo(vx+g.w*0.025, vy);ctx.lineTo(vx+g.w*0.025, g.h*0.9);\n    ctx.stroke();\n    ctx.restore();\n  }\n  // O&M: crew transfer vessel — slow day loop out and back\n  let omVx=0, omVy=0;\n  if(omLive>0.02){\n    const day=(tSec*0.05*AMB)%1;                 // 0..1 across a \"day\"\n    const out=Math.sin(day*Math.PI);             // 0 -> 1 -> 0 (leave & return)\n    const vx=lerp(g.landfallX+g.w*0.06, g.turb[2].x, out);\n    const vy=lerp(g.shoreY-g.h*0.03, g.vesselY, 0.4+0.4*out);\n    omVx=vx; omVy=vy;\n    // wake\n    ctx.save();ctx.globalAlpha*=omLive*0.5;\n    ctx.strokeStyle=rgb(PAL.light,0.5);ctx.lineWidth=1.4*H;\n    ctx.beginPath();ctx.moveTo(vx-g.w*0.04,vy+g.h*0.012);ctx.lineTo(vx,vy+g.h*0.012);ctx.stroke();\n    ctx.restore();\n    drawVesselHull(vx,vy,g.w*0.045,mix(PAL.ink,PAL.green,0.18),omLive);\n  }\n  // Decommissioning: heavy lift vessel lowering a blade\n  if(sDec>0.02){\n    const idx=clamp(Math.floor(decProg*NT),0,NT-1);\n    const near=g.turb[idx]||g.turb[0];\n    const vx=near.x - g.w*0.055, vy=g.vesselY*0.96;\n    drawVesselHull(vx,vy,g.w*0.075,mix(PAL.ink,PAL.seaDeep,0.1),sDec);\n    ctx.save();ctx.globalAlpha*=sDec;\n    ctx.strokeStyle=rgb(PAL.ink);ctx.lineWidth=2*H;ctx.lineCap='round';\n    ctx.beginPath();\n    ctx.moveTo(vx,vy);ctx.lineTo(vx+g.w*0.02, vy-g.h*0.14);\n    const drop=lerp(near.baseY-near.towerH*0.4, vy-g.h*0.02, (decProg*NT)%1);\n    ctx.lineTo(vx+g.w*0.02, drop);\n    ctx.stroke();\n    ctx.restore();\n  }\n\n  // ---- shore foreground (the ground we stand on) ----\n  ctx.save();\n  // water veil at the shoreline\n  const land=ctx.createLinearGradient(0,g.shoreY-g.h*0.06,0,g.h);\n  land.addColorStop(0,rgb(PAL.land,0));\n  land.addColorStop(0.5,rgb(PAL.land,1));\n  land.addColorStop(1,rgb(mix(PAL.land,PAL.ink,0.3),1));\n  ctx.fillStyle=land;\n  ctx.beginPath();\n  ctx.moveTo(-g.w,g.h);\n  ctx.lineTo(-g.w,g.shoreY);\n  // gentle undulating shore\n  ctx.quadraticCurveTo(g.w*0.25,g.shoreY-g.h*0.02, g.w*0.5,g.shoreY-g.h*0.004);\n  ctx.quadraticCurveTo(g.w*0.8,g.shoreY+g.h*0.01, g.w*2,g.shoreY-g.h*0.006);\n  ctx.lineTo(g.w*2,g.h);ctx.closePath();ctx.fill();\n\n  // shore structures per stage (built simply as blocks)\n  const sxPort=g.w*0.16;\n  // Construction / Decommissioning: port cranes + heavy transport\n  const portA=Math.max(sCon,sDec);\n  if(portA>0.02){\n    ctx.save();ctx.globalAlpha*=portA;\n    ctx.strokeStyle=rgb(PAL.ink);ctx.fillStyle=rgb(PAL.ink);ctx.lineWidth=2*H;\n    for(let c=0;c<2;c++){\n      const cx=sxPort+c*g.w*0.06, cy=g.shoreY-g.h*0.006;\n      ctx.beginPath();\n      ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-g.h*0.11);\n      ctx.lineTo(cx+g.w*0.05,cy-g.h*0.09);\n      ctx.stroke();\n    }\n    ctx.restore();\n  }\n  // O&M: operations base building\n  if(omLive>0.02){\n    ctx.save();ctx.globalAlpha*=omLive;\n    ctx.fillStyle=rgb(mix(PAL.ink,PAL.land,0.25));\n    const bx=sxPort, by=g.shoreY-g.h*0.006;\n    ctx.fillRect(bx, by-g.h*0.05, g.w*0.075, g.h*0.05);\n    ctx.fillStyle=rgb(mix(PAL.green,PAL.ink,0.3));\n    ctx.fillRect(bx+g.w*0.008, by-g.h*0.03, g.w*0.012, g.h*0.02);\n    ctx.fillRect(bx+g.w*0.03, by-g.h*0.03, g.w*0.012, g.h*0.02);\n    ctx.restore();\n  }\n  ctx.restore();\n\n  ctx.restore();  // end camera transform\n\n  // ---- focus scrim (subtle, deepens the focused stage) ----\n  const focusStrength=Math.max(sDev,sCon,sOm,sDec);\n  ctx.fillStyle=rgb(PAL.ink, 0.05*focusStrength);\n  ctx.fillRect(0,0,g.w,g.h);\n\n  // ================= LABELS (screen space) =================\n  const labels=[];\n  function addLabel(wx,wy,text,alpha,side,sub){\n    if(alpha<=0.04)return;\n    const [sx,sy]=worldToScreen(wx,wy);\n    labels.push({sx,sy,text,alpha,side:side||1,sub:sub||null});\n  }\n  if(devLive>0.05){\n    addLabel(devVx,devVy+g.h*0.01,\"Survey vessel\",devLive,-1);\n    addLabel(devVx,g.h*0.83,\"Seabed survey\",devLive*0.9,1);\n  }\n  if(sCon>0.05){\n    addLabel(g.turb[Math.min(NT-1,Math.floor(conProg*NT))].x, g.turb[0].baseY-g.turb[0].towerH*0.4,\"Turbines installed\",sCon,1);\n    if(subP>0.35) addLabel(g.sub.x,g.sub.baseY-g.h*0.06,\"Offshore substation\",sCon*smooth(0.35,0.6,subP),-1);\n  }\n  // export cable — present from construction onward; stays buried after everything else is removed\n  {\n    const cableVis=Math.max(sCon,sOm,sDec);\n    if(cableVis>0.05) addLabel((g.landfallX+g.sub.x)/2,(g.shoreY+g.sub.baseY)/2+g.h*0.02,\"Export cable\",cableVis,1,sDec>0.05?\"Commonly left buried in place\":null);\n  }\n  if(sOm>0.05){\n    addLabel(g.turb[3].x,g.turb[3].baseY-g.turb[3].towerH*0.7,\"Turbines turning\",sOm*p[3],1);\n    addLabel(omVx,omVy+g.h*0.012,\"Crew transfer vessel\",omLive,-1);\n    addLabel(g.w*0.16+g.w*0.037,g.shoreY-g.h*0.03,\"Operations base\",omLive,-1);\n  }\n  if(sDec>0.05){\n    const idx=clamp(Math.floor(decProg*NT),0,NT-1);\n    addLabel(g.turb[idx].x-g.w*0.055,g.vesselY-g.h*0.05,\"Heavy lift vessel\",sDec*(1-smooth(0.82,1,decProg)),-1);\n  }\n  // simple vertical de-collision\n  labels.sort((a,b)=>a.sy-b.sy);\n  for(let i=1;i<labels.length;i++){\n    if(labels[i].sy-labels[i-1].sy<26) labels[i].sy=labels[i-1].sy+26;\n  }\n  for(const L of labels){\n    const hasSub=!!L.sub;\n    const subFont='400 11px -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif';\n    const mainFont='600 13px -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif';\n    ctx.font=mainFont;\n    const tw=ctx.measureText(L.text).width;\n    let sw=0;\n    if(hasSub){ ctx.font=subFont; sw=ctx.measureText(L.sub).width; }\n    const padX=9, ph=hasSub?38:24, pw=Math.max(tw,sw)+padX*2;\n    let px=L.sx + L.side*30;\n    if(L.side<0) px=L.sx-30-pw;\n    let py=L.sy;\n    px=clamp(px,6,g.w-pw-6); py=clamp(py,ph/2+4,g.h-ph/2-4);\n    // leader line\n    ctx.globalAlpha=L.alpha;\n    ctx.strokeStyle=rgb(PAL.ink,0.55);\n    ctx.lineWidth=1;\n    ctx.beginPath();ctx.moveTo(L.sx,L.sy);ctx.lineTo(L.side<0?px+pw:px, py);ctx.stroke();\n    ctx.beginPath();ctx.arc(L.sx,L.sy,2.2,0,7);ctx.fillStyle=rgb(PAL.ink,0.7);ctx.fill();\n    // pill\n    ctx.fillStyle=rgb(hx('#0f1c18'));\n    roundRect(px,py-ph/2,pw,ph,6);ctx.fill();\n    ctx.textBaseline='middle';\n    if(hasSub){\n      ctx.font=mainFont;ctx.fillStyle=rgb(hx('#eff4f0'));\n      ctx.fillText(L.text,px+padX,py-ph/2+11);\n      ctx.font=subFont;ctx.fillStyle=rgb(hx('#9db8a8'));\n      ctx.fillText(L.sub,px+padX,py-ph/2+27);\n    }else{\n      ctx.font=mainFont;ctx.fillStyle=rgb(hx('#eff4f0'));\n      ctx.fillText(L.text,px+padX,py+0.5);\n    }\n    ctx.globalAlpha=1;\n  }\n\n  requestAnimationFrame(safeRender);\n}\n\n/* ---------------------------------------------------------------\n   UI — timeline, slider, panel, a11y\n--------------------------------------------------------------- */\nconst TOTAL=40;\nconst input=document.getElementById('year');\nconst thumb=document.getElementById('thumb');\nconst segbar=document.getElementById('segbar');\nconst ticks=document.getElementById('ticks');\nconst badgeYear=document.getElementById('badgeYear');\nconst badgeStage=document.getElementById('badgeStage');\nconst rangeHint=document.getElementById('rangeHint');\nconst pName=document.getElementById('pName');\nconst pDur=document.getElementById('pDur');\nconst fieldsEl=document.getElementById('fields');\nconst live=document.getElementById('live');\nconst prevBtn=document.getElementById('prevBtn');\nconst nextBtn=document.getElementById('nextBtn');\n\n// build the proportional segmented timeline\nSTAGES.forEach((s,i)=>{\n  const seg=document.createElement('div');\n  seg.className='seg';\n  seg.style.flex=(s.end-s.start)+' 0 0';\n  seg.style.background=SEG_COLORS[i];\n  const w=(s.end-s.start)/TOTAL;\n  if(w<0.12) seg.classList.add('small');\n  seg.innerHTML=`<span class=\"segname\">${s.name}<\u002Fspan><span class=\"segyears\">${s.start===0?1:s.start}\\u2013${s.end}<\u002Fspan>`;\n  seg.dataset.i=i;\n  seg.addEventListener('click',()=>{ setYear(s.center,true); });\n  segbar.appendChild(seg);\n});\n// boundary ticks\n[10,13,38].forEach(y=>{\n  const t=document.createElement('div');\n  t.className='tick';t.style.left=(y/TOTAL*100)+'%';\n  ticks.appendChild(t);\n});\n\nfunction stageIndexFor(y){\n  for(let i=STAGES.length-1;i>=0;i--){ if(y>=STAGES[i].start) return i; }\n  return 0;\n}\nlet curStage=-1;\nfunction renderPanel(idx){\n  const s=STAGES[idx];\n  fieldsEl.classList.add('fade');\n  setTimeout(()=>{\n    pName.textContent=s.name;\n    pDur.textContent=s.chip;\n    fieldsEl.innerHTML='';\n    s.fields.forEach(f=>{\n      const d=document.createElement('div');\n      d.className='field'+(f[2]?' wide':'');\n      d.innerHTML=`<p class=\"flabel\">${f[0]}<\u002Fp><p class=\"fval\">${f[1]}<\u002Fp>`;\n      fieldsEl.appendChild(d);\n    });\n    fieldsEl.classList.remove('fade');\n  },140);\n  // active seg outline\n  segbar.querySelectorAll('.seg').forEach((el,i)=>el.classList.toggle('active',i===idx));\n  live.textContent=`${s.name}. ${s.live}`;\n}\n\nfunction updateThumb(){\n  const pct=year/TOTAL;\n  thumb.style.left=`calc(${pct*100}% )`;\n}\nfunction updateReadouts(){\n  const idx=stageIndexFor(year);\n  const s=STAGES[idx];\n  const yShown=Math.round(year);\n  badgeYear.textContent='Year '+yShown;\n  badgeStage.textContent=s.name;\n  rangeHint.textContent=`Year ${yShown} of ${TOTAL}`;\n  input.setAttribute('aria-valuetext',`Year ${yShown} of 40, ${s.name.toLowerCase()}`);\n  if(idx!==curStage){ curStage=idx; renderPanel(idx); }\n  prevBtn.disabled=(idx===0);\n  nextBtn.disabled=(idx===STAGES.length-1);\n}\n\nfunction setYear(y,announce){\n  year=clamp(y,0,TOTAL);\n  input.value=year;\n  updateThumb();\n  updateReadouts();\n}\n\ninput.addEventListener('input',()=>{ setYear(parseFloat(input.value)); });\nprevBtn.addEventListener('click',()=>{\n  const idx=stageIndexFor(year);\n  if(idx>0) setYear(STAGES[idx-1].center,true);\n});\nnextBtn.addEventListener('click',()=>{\n  const idx=stageIndexFor(year);\n  if(idx<STAGES.length-1) setYear(STAGES[idx+1].center,true);\n});\n\n// init\nresize();\nsetYear(0);\n// keep thumb aligned after fonts/layout settle\nwindow.addEventListener('resize',()=>{ resize(); updateThumb(); });\nrequestAnimationFrame(safeRender);\n})();\n<\u002Fscript>\n\n\n<\u002Fbody><\u002Fhtml>"
+  </script>
+</body>
+</html>
